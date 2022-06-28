@@ -1,0 +1,1 @@
+celery -A config worker -E --concurrency=1 -l INFO
