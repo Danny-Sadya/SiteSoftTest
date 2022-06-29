@@ -25,14 +25,11 @@ def scrape_main_page():
 
 @shared_task()
 def scrape_specific_posts():
-    print('In task')
     """Таск, который скрейпит посты из отдельной таблицы"""
     objects = PostToScrapeModel.objects.filter(scraped=False)
-    print(f'Objects: {objects}')
     url_list = []
     for obj in objects:
         url_list.append(obj.post_url)
-    print(f'url list: {url_list}')
     habr_scraper = HabrScraper()
     posts_data = habr_scraper.run_specific_posts_scraper(url_list)
     for post_data in posts_data:
@@ -51,4 +48,3 @@ def scrape_specific_posts():
     for obj in objects:
         obj.scraped = True
         obj.save()
-    print('ended')
